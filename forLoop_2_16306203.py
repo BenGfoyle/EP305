@@ -5,7 +5,7 @@ Created on Tue Feb 26 13:01:42 2019
 @author: Ben Guilfoyle - 16306203 - https://github.com/BenGfoyle/EP305
 
 Overview: This program takes in a posative integer n, it will calculate the sum
-of n, exp(n), n facotrial, and log base e of n facotrial for values 1 - n.
+of n, exp(n), n facotrial, and log base e of n facotrial for values 1 to n.
 """
 
 import numpy as np #gives access to mathematical functions
@@ -13,20 +13,6 @@ import numpy as np #gives access to mathematical functions
 def informUser():
     print("This program will request a posative integer 'N' as input.",\
           "The sum of N, e^N, N!, and ln(N!), for values 1 to N")
-
-#newInput function to handle input, especially in the result of bas user input
-def newInput():
-    num = input("Please enter an integer between zero and twenty: ")
-    try: #attempt to parse num to int
-        num = int(num)
-        if num > 0 and num < 21:
-            return num
-        else:
-            print("You have entered an invalid value, try again please")
-            newInput()
-    except: #if error is thrown  eg letters entered
-        print("You have entered an invalid value, try again please")
-        newInput() #call newInput and try get a different input string
 
 def sumOf(n): 
     total = 0
@@ -41,7 +27,7 @@ def expo(n): #call numpy to calcualte expontential
 def natural(n):
     try:
         n = np.log(n)
-    except:
+    except: #just in case n is too big
         n = "Cannot Compute!"
     return n
 
@@ -64,19 +50,33 @@ def printing(num, sigma_N, exp_N, fact_N, nat_N):
     fact_N = int(fact_N)
     nat_N = int(nat_N)
     
+    #printing with adjustments as required
     print('{0:>8}'.format(num), '{0:>10.3f}'.format(sigma_N),\
           '{0:>18.3f}'.format(exp_N),'{0:>20}'.format(fact_N),\
           '{0:>10}'.format(nat_N))
     
 def main():
     informUser()
-    num = newInput()
-    printHeadings()
-    for i in range(1,num+1):
-        sigma_N = sumOf(i)
+    
+    while(True):
+        num = input("Please enter an integer between zero and twenty: ")
+        try: #attempt to parse num to int
+            num = int(num)
+            if num > 0 and num < 21: #num above 21 leads to undefined ln(n!)
+                break #escape while true loop
+            else:
+                print("You have entered an invalid value, try again please")
+        except: #if error is thrown  eg letters entered
+            print("You have entered an invalid value, try again please")
+            
+    printHeadings() # print headings for table
+    for i in range(1,num+1): #iterate over 1 to num
+        #calculate based off arithmatic functions
+        sigma_N = sumOf(i) 
         exp_N = expo(i)
         fact_N = factorial(i)
         nat_N = natural(fact_N)
+        #call finction for table printing
         printing(i, sigma_N, exp_N, fact_N, nat_N)
         
 if __name__ == "__main__": #go to main method
