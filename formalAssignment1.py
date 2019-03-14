@@ -3,7 +3,7 @@
 """
 Created on Mon Mar 11 11:19:21 2019
 
-@author: BenGfoyle
+@author: BenGfoyle - 16306203 - github.com/bengfoyle/ep305
 
 Overview: This program will take in 2 values which correspond to the wavelength
 of a photon of light in nanometers. The corresponding frequency, and energy in 
@@ -11,6 +11,7 @@ electron volts will be calculated. The output follows a predefined format.
 """
 #import scipy to retieve constants
 from scipy import constants as con
+from numpy import arange
 
 #define constants
 PI = con.pi
@@ -29,24 +30,13 @@ def informUser():
 
 #==============================================================================
 def newInput():
-    prompt = 'Please enter a value for wavelength in nanometers',\
-             'such that: 0 <= wavelength <=360'
+    prompt = "Enter a value for wavelength in nanometers:\n"
     wave_l =input(prompt)
     try: #attempt to parse values to a float
-        if wave_l > 360 or wave_l < 0:
-            print("You entered a value outside the defined range, try again!")
-            return newInput()
-
-        #confirm user input is correct
-        print("\nYou have entered:",wave_l)
+        wave_l = float(wave_l)
+        return wave_l
         
-        ans = input("\nIs this correct? [y/n]\n")
-        if(ans == 'y'): 
-            return wave_l
-        else:
-            print("You have selected no.")
-            return newInput()
-    except: #bad values or an inforseen error occured
+    except ValueError: #bad values or an inforseen error occured
         print("You may have entered an invalid value please try again!")
         return newInput()
 #==============================================================================
@@ -63,21 +53,65 @@ def getFreq(energy):
     
 #==============================================================================
 def getEnergy(wave_l):
-    if wave_l == 0:
+    if wave_l <= 0:
         energy = "UNDEFINED"
     else:
         energy = (LIGHT * PLANCK) / wave_l
-    return energy()
+    return energy
 #==============================================================================
 
 #==============================================================================
-def printing(energy,wavelength,head1,head2,head3):
-    print("{g:.5e}".format((head1)),\
-          "{g:.5e}".format((head2)),\
-          "{g:.5e}".format((head3)))
+def printing(head1,head2,head3):
+    try:
+        print("{0:g>27.5e}".format((head1)),'\\',\
+              "{0:g>27.5e}".format((head2)),'\\',\
+              "{0:g>27.5e}".format((head3)))
+    except:
+        print("{0:g>27}".format((head1)),'\\',\
+              "{0:g>27}".format((head2)),'\\',\
+              "{0:g>27}".format((head3)))
     
 #==============================================================================
 
+
+#==============================================================================
+def findMin(a,b):
+    minimum = 0
+    difference = a - b #posative if a > b, negative if b > a
+    
+    if difference > 0:
+        bMin = b - minimum #posative if b > minimum negative if minimum > b
+        if 0 > bMin:
+            minimum = b
+    
+    else:
+        aMin = a - minimum
+        if 0 > aMin:
+            minimum = a
+    
+    return minimum
+    
+#==============================================================================
+        
+#==============================================================================
+def findMax(a,b):
+    maximum = 360
+    difference = a - b #posative if a > b, negative if b > a
+    
+    if difference < 0:
+        bMax = b - maximum #posative if b > minimum negative if minimum > b
+        if 0 < bMax:
+            maximum = b
+    
+    else:
+        aMax = a - maximum
+        if 0 < aMax:
+            maximum = a
+    
+    return maximum
+    
+#==============================================================================
+        
 #==============================================================================
 def main():
     energy = []
@@ -85,12 +119,17 @@ def main():
     freq = []
     a = newInput()
     b = newInput()
+    mini = findMin(a,b)
+    print(mini)
+    
+    maxi = findMax(a,b)
+    print(maxi)
+    
     step = 30
     
-    if b < a: #account for b less than a
-        step = step *-1
+    printing("Wavelength (nm)","Energy eV","Frequency(Hz)")
         
-    for i in range(a,b,step):
+    for i in arange(mini,maxi,step):
         #get energy and frequency
         currentEnergy = getEnergy(i)
         currentFrequency = getFreq(currentEnergy)
@@ -99,8 +138,9 @@ def main():
         wave.append(i)
         energy.append(currentEnergy)
         freq.append(currentFrequency)
-
-    printing(energy,wave,freq,"Energy eV","Wavelength (nm)","Frequency(Hz)")
+        
+    for i in range(0,len(energy)):
+        printing(wave[i],energy[i],freq[i])
         
 #==============================================================================
 
