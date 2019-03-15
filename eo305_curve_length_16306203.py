@@ -6,6 +6,10 @@ Created on Tue Mar 12 12:46:53 2019
 @author: BenGfoyle
 
 Overview: This program numerically calculates the curve length of a semicirlcle
+It will do this by div iding the semicircle into n parts. It will then sum over
+the curve length each part to achieve an estimate for curve length. The program
+stops when the error is less than or equal to 1e-6. This is done for an n 
+increasing by a factor of 2 and a factor of 10. 
 """
 
 import numpy as np #for pi
@@ -25,14 +29,14 @@ def informUser():
 #==============================================================================
 
 #==============================================================================
-def makeGraph(yAxis,xAxis,name):
-    plt.scatter(xAxis,yAxis, label = name)
+def makeGraph(yAxis,xAxis,name): #standard plotting using numpy 
+    plt.scatter(xAxis,yAxis, label = name) #scatter plot
     plt.legend(name)
+    plt.legend(loc='lower right')
     plt.semilogx(xAxis,yAxis) #logarithmic x axis to help with visuals
     plt.xlabel("log n")
     plt.ylabel("length")
     plt.title("Plot of log n vs curve length")
-    plt.legend(loc='lower right')
     plt.show()
 #==============================================================================
 
@@ -88,9 +92,9 @@ if __name__ == "__main__":
     #inform user, and print headings and go to main method
     informUser()
     printing("n", "length", "error")
-    main(n,0,2)
+    main(n,0,2) #call main
     print("\n")
-    makeGraph(n_length,all_n,"n = 2 * n")
+    makeGraph(n_length,all_n,"n = 2 * n") #plot graph
     #clear values in the lists for new data
     all_n.clear()
     n_length.clear()
@@ -98,10 +102,9 @@ if __name__ == "__main__":
     printing("n", "length", "error")
     main(n,0,10)
     print("\n")
-    makeGraph(n_length,all_n, "n = n * 10")
-
-
-
+    makeGraph(n_length,all_n, "n = n * 10") #plot graph
+    
+    #explanasion
     print("The asymptotic behaviour is much more apparent when n increases",\
           "by a factor of two rather than a factor of ten. This is due to",\
           "the step size being too large when probaing by factors of ten.")
