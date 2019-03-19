@@ -78,8 +78,8 @@ def main(n,prev_length,nGrowth):
     for i in range(0,n): #iteratre over distance to n
         x = xmin + i*dx #set new current x position
         c_length = c_length + newLength(x,dx) #incriment length by new length
-        c_error = abs(prev_length - c_length) #find error base off known value
-
+    
+    c_error = abs(prev_length - c_length) #find error base off known value
     printing(n, c_length, c_error)
     all_n.append(n)
     n_length.append(c_length)
@@ -98,11 +98,27 @@ if __name__ == "__main__":
     #clear values in the lists for new data
     all_n.clear()
     n_length.clear()
+    
+    printing("n", "length", "error")
+    main(n,0,3)
+    print("\n")
+    makeGraph(n_length,all_n, "n = n * 3") #plot graph
+    all_n.clear()
+    n_length.clear()
+    
+    printing("n", "length", "error")
+    main(n,0,9)
+    print("\n")
+    makeGraph(n_length,all_n, "n = n * 9") #plot graph
+    all_n.clear()
+    n_length.clear()
 
     printing("n", "length", "error")
     main(n,0,10)
     print("\n")
     makeGraph(n_length,all_n, "n = n * 10") #plot graph
+    
+
     
     #explanasion
     print("The asymptotic behaviour is much more apparent when n increases",\
