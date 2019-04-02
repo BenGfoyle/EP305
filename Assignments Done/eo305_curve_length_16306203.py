@@ -55,8 +55,8 @@ def newLength(x,dx):#calcualte new length based off pytagoras
 def printing(n,length, error): #pretty printing/formatting
     try:
         print('{0:>18}'.format(n), '|',\
-              '{0:>18.7f}'.format(length), '|',\
-              '{0:>18.7f}'.format(error), '|')
+              '{0:>18.12f}'.format(length), '|',\
+              '{0:>18.12f}'.format(error), '|')
     except:
         print('{0:>18}'.format(n), '|',\
               '{0:>18}'.format(length), '|',\
@@ -84,7 +84,7 @@ def main(n,prev_length,nGrowth):
     all_n.append(n)
     n_length.append(c_length)
 
-    if c_error > 1e-6: #if error is not within acceptable value
+    if c_error > 1e-12: #if error is not within acceptable value
         return main(n * nGrowth, c_length, nGrowth)#call main again with new n
 #==============================================================================
 
@@ -99,24 +99,26 @@ if __name__ == "__main__":
     all_n.clear()
     n_length.clear()
     
-    printing("n", "length", "error")
-    main(n,0,3)
-    print("\n")
-    makeGraph(n_length,all_n, "n = n * 3") #plot graph
-    all_n.clear()
-    n_length.clear()
-    
-    printing("n", "length", "error")
-    main(n,0,9)
-    print("\n")
-    makeGraph(n_length,all_n, "n = n * 9") #plot graph
-    all_n.clear()
-    n_length.clear()
-
-    printing("n", "length", "error")
-    main(n,0,10)
-    print("\n")
-    makeGraph(n_length,all_n, "n = n * 10") #plot graph
+# =============================================================================
+#     printing("n", "length", "error")
+#     main(n,0,3)
+#     print("\n")
+#     makeGraph(n_length,all_n, "n = n * 3") #plot graph
+#     all_n.clear()
+#     n_length.clear()
+#     
+#     printing("n", "length", "error")
+#     main(n,0,9)
+#     print("\n")
+#     makeGraph(n_length,all_n, "n = n * 9") #plot graph
+#     all_n.clear()
+#     n_length.clear()
+# 
+#     printing("n", "length", "error")
+#     main(n,0,10)
+#     print("\n")
+#     makeGraph(n_length,all_n, "n = n * 10") #plot graph
+# =============================================================================
     
 
     

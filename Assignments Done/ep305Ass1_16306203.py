@@ -57,9 +57,7 @@ def getEnergy(wave_l): #calculate energy based off wavelength
         energy = "UNDEFINED"
     else:
         energy = (LIGHT * PLANCK) / wave_l
-        print(energy," Joules")
         energy = energy / EV
-        print(energy," EV")
     return energy
 #==============================================================================
 
