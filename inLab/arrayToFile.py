@@ -23,7 +23,7 @@ def fileRead():
 
     #read first line
     header = inFile.readline()
-    print(header)
+    #print(header)
 
     #get values from each line
     for line in inFile:
@@ -49,10 +49,10 @@ def fileWrite(sp_length,sp_period):
     fileName = "pendulum.txt"
     outFile = open(fileName,'w')
 
-    #print heading
+    """#print heading
     print("{0:>15}".format("Index"),\
           "{0:>15}".format("Length (cm)"),\
-          "{0:>15}".format("Period (s)"))
+          "{0:>15}".format("Period (s)"))"""
 
     #print lsits to file
     for i in range(0, len(sp_length)):
@@ -119,7 +119,7 @@ def main():
     file_length, file_period = fileRead()
 
     #print the data check they are the same
-    print("Data from manual entry\n")
+    print("NData from manual entry\n")
     printData(man_length, man_period)
     print("\nData retrieved form file\n")
     printData(file_length, file_period)
