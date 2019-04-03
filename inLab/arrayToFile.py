@@ -21,10 +21,8 @@ def fileRead():
     sp_length = []
     sp_period = []
 
-    #read first line
-    header = inFile.readline()
-    #print(header)
 
+    header = inFile.readline()
     #get values from each line
     for line in inFile:
         values = line.split()
@@ -48,12 +46,9 @@ def fileWrite(sp_length,sp_period):
     #name and open file
     fileName = "pendulum.txt"
     outFile = open(fileName,'w')
-
-    """#print heading
     print("{0:>15}".format("Index"),\
           "{0:>15}".format("Length (cm)"),\
-          "{0:>15}".format("Period (s)"))"""
-
+          "{0:>15}".format("Period (s)"), file = outFile)
     #print lsits to file
     for i in range(0, len(sp_length)):
         print("{0:>15}".format(i),\
@@ -88,18 +83,32 @@ def getData():
     and returns both lists to the main method
     """
     #define n and lists
-    n = 10
     sp_length = []
     sp_period = []
+    c_length = 0.0
+    c_period = 0.0
     #retrieve data from user input
-    for i in range(0,n):
+    print("Please enter a non numeric value to when you are finished")
+    i = 1
+    while(type(c_length) == float and type(c_period) == float ):
         print("\nPlease enter a value for length ['",i,"']\n")
-        c_length = float(input())
-        sp_length.append(c_length)
+        c_length = input()
 
-        print("Please enter a value for period ['",i,"']\n")
-        c_period = float(input())
-        sp_period.append(c_period)
+        #try parse to float
+        try:
+            c_length = float(c_length)
+
+
+            print("Please enter a value for period ['",i,"']\n")
+            c_period = input()
+            c_period = float(c_period)
+
+            sp_period.append(c_period)
+            sp_length.append(c_length)
+            i += 1
+        #if user enters a non numeric character finish input
+        except:
+            print("Thank you, your data is being processed.")
 
     return sp_length, sp_period
 #==============================================================================
@@ -119,7 +128,7 @@ def main():
     file_length, file_period = fileRead()
 
     #print the data check they are the same
-    print("NData from manual entry\n")
+    print("\nData from manual entry\n")
     printData(man_length, man_period)
     print("\nData retrieved form file\n")
     printData(file_length, file_period)
